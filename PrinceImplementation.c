@@ -194,20 +194,14 @@ void generazioneKey(word8 k[], word8 *k2)
     int i;
     word8 temp, temp2;
 
-    temp = 0;
-    temp2 = (k[1] & 0x08) >> 3;
-    k2[0] = ((k[0] &0xe)>> 1) ^ ((k[0] & 0x07) << 1) ^ temp ^ temp2;
-
-    for(i=1; i<15; i++)
+    for(i=0; i<14; i++)
     {
-        temp = (k[i-1] & 0x01) << 3;
-        temp2 = (k[i+1] & 0x08) >> 3;
-        k2[i] = ((k[i]&0xe) >> 1) ^ ((k[i] & 0x07) << 1) ^ temp ^ temp2;
+        k2[i] = (k[i] >> 1) ^  ((k[i+1] & 0x01) << 3);
     }
 
-    temp = (k[14] & 0x01) << 3;
-    temp2 = (k[0] & 0x08) >> 3;
-    k2[15] = ((k[15]&0xe) >> 1) ^ ((k[15] & 0x07) << 1) ^ temp ^ temp2;
+    k2[0] ^= ((k[15] & 0x08) >> 3);
+
+    k2[15] = (k[15] >> 1) ^  ((k[0] & 0x01) << 3);
 
 }
 
